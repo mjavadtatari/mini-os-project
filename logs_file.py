@@ -2,12 +2,13 @@ import openpyxl
 import os
 
 logs_file_dir = 'administrator'
-logs_file = ''
-logs_file_worksheet = ''
+logs_file = None
+logs_file_worksheet = None
 
 
 def open_logs_file():
     # Try to open or create logs_file.xlsx
+    global logs_file
 
     if not os.path.exists(logs_file_dir):
         # Try to open or create directory.
@@ -28,6 +29,8 @@ def open_logs_file():
 
 def save_logs_file():
     # Saving the xlsx as logs_file.
+    global logs_file
+
     logs_file.save(logs_file_dir + '\\logs_file.xlsx')
 
     return True
