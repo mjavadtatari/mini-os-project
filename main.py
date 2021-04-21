@@ -1,4 +1,3 @@
 import logs_file
 
-logs = logs_file.open_logs_file()
-logs_file.save_logs_file()
+logs_file.add_record('javad', 'add', '3, 4', '7')

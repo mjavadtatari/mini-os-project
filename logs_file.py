@@ -1,9 +1,9 @@
 import openpyxl
 import os
+import datetime
 
 logs_file_dir = 'administrator'
 logs_file = None
-logs_file_worksheet = None
 
 
 def open_logs_file():
@@ -22,7 +22,27 @@ def open_logs_file():
     else:
         logs_file = openpyxl.Workbook()
         logs_file_worksheet = logs_file.active
+
         logs_file_worksheet.title = 'system logs'
+
+        logs_file_worksheet['A1'] = 'Date'
+        logs_file_worksheet['B1'] = 'Time'
+        logs_file_worksheet['C1'] = 'Username'
+        logs_file_worksheet['D1'] = 'Command'
+        logs_file_worksheet['E1'] = 'Input Parameters'
+        logs_file_worksheet['F1'] = 'Output Resault'
+
+        logs_file_worksheet.column_dimensions['A'].width = 15
+        logs_file_worksheet.column_dimensions['B'].width = 15
+        logs_file_worksheet.column_dimensions['C'].width = 30
+        logs_file_worksheet.column_dimensions['D'].width = 20
+        logs_file_worksheet.column_dimensions['E'].width = 20
+        logs_file_worksheet.column_dimensions['F'].width = 20
+
+        for rows in logs_file_worksheet.iter_rows(min_row=1, max_row=1, min_col=1):
+            for cell in rows:
+                cell.fill = openpyxl.styles.PatternFill(
+                    start_color='FF3498DB', end_color='FF3498DB', fill_type="solid")
 
     return logs_file_worksheet
 
@@ -36,5 +56,24 @@ def save_logs_file():
     return True
 
 
-def last_line():
-    return logs_file_worksheet.max_row
+def find_last_line():
+    ws = open_logs_file()
+    return ws, str(ws.max_row + 1)
+
+
+def now_date_time():
+    now = datetime.datetime.now()
+    return now.strftime("%Y/%m/%d"), now.strftime("%H:%M:%S")
+
+
+def add_record(r_user, r_command, r_input, r_output):
+    # Adding a record to the xlsx file.
+    ws, last_line = find_last_line()
+
+    ws['A'+last_line], ws['B'+last_line] = now_date_time()
+    ws['C'+last_line] = r_user
+    ws['D'+last_line] = r_command
+    ws['E'+last_line] = r_input
+    ws['F'+last_line] = r_output
+
+    save_logs_file()
