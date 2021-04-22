@@ -2,13 +2,17 @@ import openpyxl
 import os
 import datetime
 
-logs_file_dir = 'administrator'
+logs_file_dir = 'root\\administrator'
 logs_file = None
 
 
 def open_logs_file():
     # Try to open or create logs_file.xlsx
     global logs_file
+
+    if not os.path.exists('root'):
+        # Try to open or create directory.
+        os.makedirs('root')
 
     if not os.path.exists(logs_file_dir):
         # Try to open or create directory.
