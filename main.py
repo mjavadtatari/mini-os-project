@@ -1,14 +1,14 @@
 from logs_file import *
-from login import *
+from account import *
 from management import *
 from command import *
 
 
-user = LoggedInUser()
+user = Account()
 user.loginPage()
 
 if user.relogin:
-    user = LoggedInUser()
+    user = Account()
     user.loginPage()
 
 if user.logged_in:
