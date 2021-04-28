@@ -1,8 +1,6 @@
-from colorama import init
-from termcolor import colored
+import re
 
-# use Colorama to make Termcolor work on Windows too
-# init()
+p = input()
 
-# then use Termcolor for all colored text output
-print(colored('Hello, World!', 'green'))
+
+print(re.search("\s",p))
