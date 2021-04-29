@@ -13,5 +13,8 @@ if user.relogin:
 
 if user.logged_in:
     while True:
-        pass
+        cm = Command(user.username)
+        cm.read_input_command()
+
+
 # add_record('javad', 'add', '3, 4', '7')

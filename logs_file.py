@@ -2,6 +2,7 @@ import openpyxl
 import os
 import datetime
 from openpyxl.styles import Font
+from termcolor import colored
 
 logs_file_dir = 'root\\administrator'
 logs_file = None

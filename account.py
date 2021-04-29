@@ -183,7 +183,7 @@ class Account():
                 self.ban_user(temp_username, temp_password)
 
     def username_title(self):
-        return '{} > '.format(self.username)
+        return '{} >> '.format(self.username)
 
     def update_account_info(self):
         temp_first = input(self.username_title() + 'First Name : ')
