@@ -48,7 +48,7 @@ class Account():
                 return True
             else:
                 add_record(self.username, 'login', 'pass: ' +
-                           self.password, 'Failed, The User is Banned')
+                           self.password, 'Failed, The User is Banned','r')
                 print(colored(
                     'Your account has been banned, please contact the administrator!', 'red'))
                 sleep(3)
@@ -79,13 +79,13 @@ class Account():
         elif self.failed_attempted < 2:
             self.failed_attempted += 1
             add_record(username, 'login', 'pass: ' + password,
-                       'Failed Attempts= ' + str(self.failed_attempted))
+                       'Failed Attempts= ' + str(self.failed_attempted),'r')
             print(colored('your failed attempts= ' +
                   str(self.failed_attempted) + '\n\n\n', 'yellow'))
 
         else:
             add_record(username, 'kicked', '3 failed attempts',
-                       'Session has Ended')
+                       'Session has Ended','r')
             print(
                 colored('due to 3 failed attempts, your session has ended!', 'red'))
             sleep(3)
@@ -95,6 +95,26 @@ class Account():
         self.failed_attempted = 0
         users_db_ws['H' + self.user_row].value = 'F'
         users_db.save('Users.xlsx')
+
+    def set_email(self):
+        import re
+        regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+
+        if str(users_db_ws['D' + self.user_row].value) == 'None':
+            print(colored('\n\nYou Need to Submit Your Email Address!\n', 'blue'))
+            while True:
+                temp_email = input(self.username_title() + 'Email : ')
+                if re.search(regex, temp_email):
+                    users_db_ws['D' + self.user_row].value = temp_email
+                    users_db.save('Users.xlsx')
+                    add_record(self.username, 'set email', 'email :' + temp_email,
+                               'Submited Successfully')
+                    print(colored('\nEmail Submited Successfully!\n\n', 'green'))
+                    break
+                else:
+                    add_record(self.username, 'set email', 'email :' + temp_email,
+                               'Failed, Not a Valid address','r')
+                    print(colored('Enter a Valid Email address!\n', 'yellow'))
 
     def password_strength_checker(self, password):
         import re
@@ -117,11 +137,13 @@ class Account():
         return True
 
     def change_password(self):
+        self.set_email()
         if users_db_ws['G' + self.user_row].value == 'T':
             print(colored('\nYou Need to Change Your Password!', 'blue'))
             print(colored('The password must be at least 8 characters long and contain both lower and upper case letters, numbers, and symbols.\n\n', 'white'))
             while True:
-                temp_password = input(self.username + ' > New Password : ')
+                temp_password = input(
+                    self.username_title() + 'New Password : ')
                 if self.password_strength_checker(temp_password):
                     users_db_ws['C' + self.user_row].value = users_db_ws['B' +
                                                                          self.user_row].value
@@ -138,14 +160,19 @@ class Account():
                     print(
                         colored('The entered Password is not Strong enough, Try again!\n', 'yellow'))
                     add_record(self.username, 'change password', 'pass :' + temp_password,
-                               'Failed, easily crackable password')
+                               'Failed, easily crackable password','r')
         else:
             return True
 
     def loginPage(self):
         while True:
             temp_username = input('Login as: ')
-            temp_password = input(temp_username + '\'s Password: ')
+            temp_password = input(
+                temp_username + '\'s Password (\'F\' for forgot Password): ')
+
+            if temp_password.lower() == 'f':
+                self.forget_password(temp_username)
+                break
 
             if self.check_password(temp_username, temp_password):
                 print(colored('\nWelcome ' + temp_username + '\n\n\n', 'green'))
@@ -154,3 +181,13 @@ class Account():
             else:
                 print(colored('\nThe Username or Password is Incorrect!', 'red'))
                 self.ban_user(temp_username, temp_password)
+
+    def username_title(self):
+        return '{} > '.format(self.username)
+
+    def update_account_info(self):
+        temp_first = input(self.username_title() + 'First Name : ')
+        temp_last = input(self.username_title() + 'Last Name : ')
+
+    def forget_password(self, username):
+        pass

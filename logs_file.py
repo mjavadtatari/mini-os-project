@@ -1,6 +1,7 @@
 import openpyxl
 import os
 import datetime
+from openpyxl.styles import Font
 
 logs_file_dir = 'root\\administrator'
 logs_file = None
@@ -70,14 +71,16 @@ def now_date_time():
     return now.strftime("%Y/%m/%d"), now.strftime("%H:%M:%S")
 
 
-def add_record(r_user, r_command, r_input, r_output):
+def add_record(r_user, r_command, r_input, r_output, r_color='g'):
     # Adding a record to the xlsx file.
     ws, last_line = find_last_line()
 
-    ws['A'+last_line], ws['B'+last_line] = now_date_time()
-    ws['C'+last_line] = r_user
-    ws['D'+last_line] = r_command
-    ws['E'+last_line] = r_input
-    ws['F'+last_line] = r_output
+    ws['A' + last_line], ws['B' + last_line] = now_date_time()
+    ws['C' + last_line] = r_user
+    ws['D' + last_line] = r_command
+    ws['E' + last_line] = r_input
+    ws['F' + last_line] = r_output
+    ws['F' + last_line].font = Font(
+        color='FF27AE60') if r_color == 'g' else Font(color='FFE74C3C')
 
     save_logs_file()
