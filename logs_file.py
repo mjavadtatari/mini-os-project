@@ -42,8 +42,8 @@ def open_logs_file():
         logs_file_worksheet.column_dimensions['B'].width = 15
         logs_file_worksheet.column_dimensions['C'].width = 30
         logs_file_worksheet.column_dimensions['D'].width = 20
-        logs_file_worksheet.column_dimensions['E'].width = 20
-        logs_file_worksheet.column_dimensions['F'].width = 40
+        logs_file_worksheet.column_dimensions['E'].width = 50
+        logs_file_worksheet.column_dimensions['F'].width = 20
 
         for rows in logs_file_worksheet.iter_rows(min_row=1, max_row=1, min_col=1):
             for cell in rows:
@@ -72,16 +72,19 @@ def now_date_time():
     return now.strftime("%Y/%m/%d"), now.strftime("%H:%M:%S")
 
 
-def add_record(r_user, r_command, r_input, r_output, r_color='g'):
+def add_record(r_user, r_command, r_input, r_output, r_color=None):
     # Adding a record to the xlsx file.
     ws, last_line = find_last_line()
 
     ws['A' + last_line], ws['B' + last_line] = now_date_time()
     ws['C' + last_line] = r_user
-    ws['D' + last_line] = r_command
-    ws['E' + last_line] = r_input
-    ws['F' + last_line] = r_output
-    ws['F' + last_line].font = Font(
-        color='FF27AE60') if r_color == 'g' else Font(color='FFE74C3C')
+    ws['D' + last_line] = str(r_command)
+    ws['E' + last_line] = str(r_input)
+    ws['F' + last_line] = str(r_output)
+    if 'fail' in r_output.lower():
+        ws['F' + last_line].font = Font(color='FFE74C3C')
+
+    elif 'success' in r_output.lower():
+        ws['F' + last_line].font = Font(color='FF27AE60')
 
     save_logs_file()

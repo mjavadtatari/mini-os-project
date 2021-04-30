@@ -48,7 +48,7 @@ class Account():
                 return True
             else:
                 add_record(self.username, 'login', 'pass: ' +
-                           self.password, 'Failed, The User is Banned','r')
+                           self.password, 'Failed, The User is Banned', 'r')
                 print(colored(
                     'Your account has been banned, please contact the administrator!', 'red'))
                 sleep(3)
@@ -79,13 +79,13 @@ class Account():
         elif self.failed_attempted < 2:
             self.failed_attempted += 1
             add_record(username, 'login', 'pass: ' + password,
-                       'Failed Attempts= ' + str(self.failed_attempted),'r')
+                       'Failed Attempts= ' + str(self.failed_attempted), 'r')
             print(colored('your failed attempts= ' +
                   str(self.failed_attempted) + '\n\n\n', 'yellow'))
 
         else:
             add_record(username, 'kicked', '3 failed attempts',
-                       'Session has Ended','r')
+                       'Session has Ended', 'r')
             print(
                 colored('due to 3 failed attempts, your session has ended!', 'red'))
             sleep(3)
@@ -113,7 +113,7 @@ class Account():
                     break
                 else:
                     add_record(self.username, 'set email', 'email :' + temp_email,
-                               'Failed, Not a Valid address','r')
+                               'Failed, Not a Valid address', 'r')
                     print(colored('Enter a Valid Email address!\n', 'yellow'))
 
     def password_strength_checker(self, password):
@@ -160,7 +160,7 @@ class Account():
                     print(
                         colored('The entered Password is not Strong enough, Try again!\n', 'yellow'))
                     add_record(self.username, 'change password', 'pass :' + temp_password,
-                               'Failed, easily crackable password','r')
+                               'Failed, easily crackable password', 'r')
         else:
             return True
 
@@ -175,7 +175,7 @@ class Account():
                 break
 
             if self.check_password(temp_username, temp_password):
-                print(colored('\nWelcome ' + temp_username + '\n\n\n', 'green'))
+                print(colored('\nWelcome ' + temp_username, 'green'))
                 self.change_password()
                 break
             else:

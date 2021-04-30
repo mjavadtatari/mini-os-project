@@ -1,0 +1,32 @@
+Welcome to miniOS.
+
+File Commands:
+  MKF +t Make New File.
+  OPF +t Open a File.
+  DEF +t Delete a File.
+  CPF +t Copy a File.
+  MVF +t Move a File.
+  RNF +t Rename a File.
+  STF +t Sort a Text File.
+  SEF +t Sort a Excel File.
+
+Directory Commands:
+  HOME +t Show User Root Directory.
+  CHD +t Change Directory.
+  MKD +t Make New Directory.
+  DED +t Delete a Directory.
+  CPD +t Copy a Directory.
+  MVD +t Move a Directory.
+  RND +t Rename a Directory.
+  EXD +t Export Directories List as an Excel File.
+
+Calculator Commands:
+  ADD +t Addition Multiple Numbers.
+  MUL +t Multiplication Multiple Numbers.
+  DIV +t Division Multiple Numbers.
+  POW +t Power Multiple Numbers.
+  ROOT +t Calculate Nth Root of a Number.
+  MOD +t Modulus.
+  LCM +t Calculate Least Common Multiple.
+  GCD +t Calculate Greatest Common Divisor.
+  BASE +t Converting Number Bases.

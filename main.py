@@ -4,17 +4,20 @@ from management import *
 from command import *
 
 
-user = Account()
-user.loginPage()
-
-if user.relogin:
+while True:
     user = Account()
     user.loginPage()
 
-if user.logged_in:
-    while True:
-        cm = Command(user.username)
-        cm.read_input_command()
+    if user.relogin:
+        user = Account()
+        user.loginPage()
+
+    if user.logged_in:
+        while True:
+            cm = Command(user.username)
+            quit = cm.read_input_command()
+            if quit:
+                break
 
 
 # add_record('javad', 'add', '3, 4', '7')
