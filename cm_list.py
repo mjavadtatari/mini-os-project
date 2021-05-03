@@ -48,7 +48,7 @@ all_cm = {
     'base': {'func': base_command, },
     'home': {'func': home_command, },
     'chd': {'func': chd_command, },
-    'mkd': {'func': '', },
+    'mkd': {'func': mkd_command, },
     'ded': {'func': '', },
     'cpd': {'func': '', },
     'mvd': {'func': '', },

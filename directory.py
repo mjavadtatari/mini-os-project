@@ -77,3 +77,58 @@ def chd_command(user, temp_list=None):
                    'Success. Directory Changed!')
 
         return 'Directory Changed!'
+
+
+def mkd_command(user, temp_list=None):
+    if temp_list:
+        temp_a = temp_list[0].split('\\')
+        if len(temp_a) > 1:
+            if temp_a[0] == user.username:
+                temp_address = 'root\\' + temp_list[0]
+                print(temp_address)
+
+                if not os.path.exists(temp_address):
+                    os.makedirs(temp_address)
+
+                    temp_x = temp_address.split('\\')
+                    user.current_dir = ''
+
+                    for i in temp_x[2:]:
+                        user.current_dir += i + '\\'
+                    user.real_current_dir = temp_address
+
+                    add_record(user.username, 'MKD', temp_address + '\\',
+                               'Success. Directory Created!')
+                    return 'Directory Created Successfully!'
+
+                else:
+                    add_record(user.username, 'MKD', temp_address + '\\',
+                               'Fail. Directory already exist!')
+                    return 'Directory already exist!'
+
+            else:
+                add_record(user.username, 'MKD', temp_list[0] + '\\',
+                           'Fail. Not Valid!')
+                return 'Enter a Valid Name or Address!'
+
+        else:
+            temp_address = user.real_current_dir + '\\' + temp_list[0]
+
+            if not os.path.exists(temp_address):
+                os.makedirs(temp_address)
+
+                temp_x = temp_address.split('\\')
+                user.current_dir = ''
+
+                for i in temp_x[2:]:
+                    user.current_dir += i + '\\'
+                user.real_current_dir = temp_address
+
+                add_record(user.username, 'MKD', temp_address + '\\',
+                           'Success. Directory Created!')
+                return 'Directory Created Successfully!'
+
+            else:
+                add_record(user.username, 'MKD', temp_address + '\\',
+                           'Fail. Directory already exist!')
+                return 'Directory already exist!'
