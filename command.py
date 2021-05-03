@@ -10,9 +10,11 @@ class Command():
 
     def __init__(self, username, *args, **kwargs):
         self.username = username
+        self.current_dir = ''
+        self.real_current_dir = 'root\\' + self.username
 
     def username_title(self):
-        return '\n{} >> '.format(self.username)
+        return '\n{}\{} >> '.format(self.username, self.current_dir)
 
     def read_input_command(self):
         while True:
@@ -26,9 +28,13 @@ class Command():
 
             try:
                 print(all_cm[temp_cm[0].lower()]['func']
-                      (self.username, temp_cm[1:]))
+                      (self, temp_cm[1:]))
             except KeyError:
                 print(colored('Enter a Valid Command Key!\n', 'yellow'))
+                add_record(self.username, 'Not Valid', temp_cm[0],
+                           'Fail')
 
+            except TypeError:
+                print(colored('Enter a Valid Command Key!\n', 'yellow'))
                 add_record(self.username, 'Not Valid', temp_cm[0],
                            'Fail')

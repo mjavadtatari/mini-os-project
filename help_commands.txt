@@ -29,4 +29,17 @@ Calculator Commands:
   MOD +t Modulus.
   LCM +t Calculate Least Common Multiple.
   GCD +t Calculate Greatest Common Divisor.
-  BASE +t Converting Number Bases.
+  BASE +t Converting Numbers of Any Bases to Decimal Numbers.
+
+Type (HELP + COMMAND) to show more about a command!
+
+dont include
+  *ADD +t For Use This Command Type (ADD num1 num2 num3 ...)
+  *MUL +t For Use This Command Type (MUL num1 num2 num3 ...)
+  *DIV +t For Use This Command Type (DIV num1 num2 num3 ...)
+  *POW +t For Use This Command Type (POW num power)
+  *ROOT +t For Use This Command Type (ROOT number root)
+  *MOD +t For Use This Command Type (ROOT num1 num2)
+  *LCM +t For Use This Command Type (LCM num1 num2)
+  *GCD +t For Use This Command Type (GCD num1 num2)
+  *BASE +t For Use This Command Type (BASE decimal_num base_num)
