@@ -1,4 +1,5 @@
 import os
+import shutil
 from management import *
 
 
@@ -31,12 +32,29 @@ def home_command(user, temp_list=None):
     return 'Directory Changed!'
 
 
+def subd_command(user, temp_list=None):
+    temp_address = user.real_current_dir
+
+    if not temp_list:
+        temp_inc = os.listdir(temp_address)
+        if temp_inc:
+            temp_out = 'including:'
+            for i in temp_inc:
+                temp_out += '\t' + i
+        else:
+            temp_out = 'Directory is Empty!'
+
+        add_record(user.username, 'SUBD', '',
+                   'Success. Sub-Directories and Files Showed-Up!')
+        return temp_out
+
+
 def chd_command(user, temp_list=None):
     home_command(user, 'No_dir_change')
 
     temp_address = 'root\\' + user.username + '\\'
 
-    if temp_list[0].lower() == 'f':
+    if temp_list[0].lower() == '-f':
         temp_address += temp_list[1].replace("\\", "\\")
 
     elif temp_list[0] == '..':
@@ -132,3 +150,46 @@ def mkd_command(user, temp_list=None):
                 add_record(user.username, 'MKD', temp_address + '\\',
                            'Fail. Directory already exist!')
                 return 'Directory already exist!'
+
+
+def ded_command(user, temp_list=None):
+    rf_flag = False
+
+    if not temp_list:
+        add_record(user.username, 'DED', '',
+                   'Failed. Empty Input!')
+        return 'Please Type (HELP DED) For more Information!'
+
+    elif temp_list[0].lower() == '-rf':
+        trash_t = temp_list.pop(0)
+        rf_flag = True
+
+    temp_a = temp_list[0].split('\\')
+    len_temp_a = len(temp_a)
+
+    if len_temp_a == 1:
+        temp_address = user.real_current_dir + '\\' + temp_a[0]
+    elif len_temp_a > 1:
+        temp_address = 'root\\' + user.username
+        for i in temp_a:
+            temp_address += '\\' + i
+
+    if os.path.exists(temp_address):
+        if not os.listdir(temp_address):
+            os.rmdir(temp_address)
+            add_record(user.username, 'DED', temp_address + '\\',
+                       'Success. the Directory Deleted!')
+            return 'the Directory Deleted Successfully!'
+        elif rf_flag:
+            shutil.rmtree(temp_address)
+            add_record(user.username, 'DED RF', temp_address + '\\',
+                       'Success. the Directory and its Content Deleted!')
+            return 'the Directory and its Content Deleted Successfully!'
+        else:
+            add_record(user.username, 'DED', temp_address + '\\',
+                       'Failed. Directory is Not Empty!')
+            return 'Directory is Not Empty. Use (-rf) to Delete Non-Empty Directories!'
+    else:
+        add_record(user.username, 'DED', temp_address + '\\',
+                   'Failed. Directory Does Not Exists!')
+        return 'Directory Does Not Exists!'

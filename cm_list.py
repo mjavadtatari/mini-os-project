@@ -15,6 +15,7 @@ def help_command(user, temp_x):
                 if '*' + temp_x[0].upper() in i:
                     text = i.replace("+t", "\t\t")
                     text = text.replace("*", "")
+                    text = text.replace("+n", "\n")
                     break
             add_record(user, 'HELP', 'help ' + temp_x[0],
                        'Success')
@@ -47,9 +48,10 @@ all_cm = {
     'gcd': {'func': gcd_command, },
     'base': {'func': base_command, },
     'home': {'func': home_command, },
+    'subd': {'func': subd_command, },
     'chd': {'func': chd_command, },
     'mkd': {'func': mkd_command, },
-    'ded': {'func': '', },
+    'ded': {'func': ded_command, },
     'cpd': {'func': '', },
     'mvd': {'func': '', },
     'rnd': {'func': '', },

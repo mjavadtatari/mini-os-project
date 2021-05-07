@@ -12,6 +12,7 @@ File Commands:
 
 Directory Commands:
   HOME +t Show User Root Directory.
+  SUBD +t Show All Sub Directories.
   CHD +t Change Directory.
   MKD +t Make New Directory.
   DED +t Delete a Directory.
@@ -44,5 +45,6 @@ dont include
   *GCD +t For Use This Command Type (GCD num1 num2)
   *BASE +t For Use This Command Type (BASE decimal_num base_num)
   *HOME +t For Use This Command Type (HOME)
-  *CHD +t For Use This Command Type (CHD f full\address) OR (CHD directory_name) OR (CHD ..)
+  *CHD +t For Use This Command Type (CHD -f full\address) OR (CHD directory_name) OR (CHD ..)
   *MKD +t For Use This Command Type (MKD directory_name) OR (MKD full\address)
+  *DED +t For Use This Command Type (DED directory_name) OR (DED full\address) +n+t  Use (-RF) For Delete None Empty Directories.
