@@ -193,3 +193,70 @@ def ded_command(user, temp_list=None):
         add_record(user.username, 'DED', temp_address + '\\',
                    'Failed. Directory Does Not Exists!')
         return 'Directory Does Not Exists!'
+
+
+def cpd_command(user, temp_list=None):
+    if len(temp_list) != 2:
+        temp_f = ''
+        for i in temp_list:
+            temp_f += i + ', '
+
+        add_record(user.username, 'CPD', temp_f,
+                   'Failed. Invalid Parameters!')
+        return 'Invalid Parameters For CPD. Type HELP CPD for more Information.'
+
+    src = 'root\\' + temp_list[0]
+    des = 'root\\' + temp_list[1]
+
+    try:
+        temp_c = shutil.copytree(src, des)
+
+    except FileNotFoundError:
+        add_record(user.username, 'CPD', src + ' --> ' + des,
+                   'Failed. Directory Not Found!')
+        return 'Directory Not Found!'
+
+    except FileExistsError:
+        add_record(user.username, 'CPD', src + ' --> ' + des,
+                   'Failed. Directory Already Exist!')
+        return 'Directory Already Exist!'
+
+    add_record(user.username, 'CPD', src + ' --> ' + des,
+               'Success. Directory Copied!')
+    return 'Directory Copied Successfully!'
+
+
+def mvd_command(user, temp_list=None):
+    if len(temp_list) != 2:
+        temp_f = ''
+        for i in temp_list:
+            temp_f += i + ', '
+
+        add_record(user.username, 'MVD', temp_f,
+                   'Failed. Invalid Parameters!')
+        return 'Invalid Parameters For MVD. Type HELP MVD for more Information.'
+
+    src = 'root\\' + temp_list[0]
+    des = 'root\\' + temp_list[1]
+
+    try:
+        temp_c = shutil.move(src, des)
+
+    except FileNotFoundError:
+        add_record(user.username, 'MVD', src + ' --> ' + des,
+                   'Failed. Directory Not Found!')
+        return 'Directory Not Found!'
+
+    except FileExistsError:
+        add_record(user.username, 'MVD', src + ' --> ' + des,
+                   'Failed. Directory Already Exist!')
+        return 'Directory Already Exist!'
+
+    except shutil.Error:
+        add_record(user.username, 'MVD', src + ' --> ' + des,
+                   'Failed. Directory Already Exist!')
+        return 'Directory Already Exist!'
+
+    add_record(user.username, 'MVD', src + ' --> ' + des,
+               'Success. Directory Moved!')
+    return 'Directory Moved Successfully!'

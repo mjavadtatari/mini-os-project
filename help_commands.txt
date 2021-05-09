@@ -48,3 +48,5 @@ dont include
   *CHD +t For Use This Command Type (CHD -f full\address) OR (CHD directory_name) OR (CHD ..)
   *MKD +t For Use This Command Type (MKD directory_name) OR (MKD full\address)
   *DED +t For Use This Command Type (DED directory_name) OR (DED full\address) +n+t  Use (-RF) For Delete None Empty Directories.
+  *CPD +t For Use This Command Type (CPD source_directory destination_directory)
+  *MVD +t For Use This Command Type (MVD source_directory destination_directory)

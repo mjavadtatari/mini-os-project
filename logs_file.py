@@ -42,7 +42,7 @@ def open_logs_file():
         logs_file_worksheet.column_dimensions['B'].width = 10
         logs_file_worksheet.column_dimensions['C'].width = 15
         logs_file_worksheet.column_dimensions['D'].width = 20
-        logs_file_worksheet.column_dimensions['E'].width = 50
+        logs_file_worksheet.column_dimensions['E'].width = 85
         logs_file_worksheet.column_dimensions['F'].width = 40
 
         for rows in logs_file_worksheet.iter_rows(min_row=1, max_row=1, min_col=1):
