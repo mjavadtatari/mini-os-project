@@ -24,7 +24,7 @@ def mkf_command(user, temp_list=None):
     temp_a = temp_list[0].split('\\')
 
     if len(temp_a) > 1:
-        temp_address = 'root'
+        temp_address = 'root\\' + user.username
 
         for i in temp_a[:-1]:
             temp_address += '\\' + i
@@ -58,7 +58,7 @@ def opf_command(user, temp_list=None):
     temp_a = temp_list[0].split('\\')
 
     if len(temp_a) > 1:
-        temp_address = 'root'
+        temp_address = 'root\\' + user.username
 
         for i in temp_a[:-1]:
             temp_address += '\\' + i
@@ -117,15 +117,113 @@ def opf_command(user, temp_list=None):
 
 
 def def_command(user, temp_list=None):
-    pass
+    if not temp_list or len(temp_list) > 1:
+        temp_f = ''
+        for i in temp_list:
+            temp_f += i + ', '
+
+        add_record(user.username, 'DEF', temp_f,
+                   'Failed. Invalid Parameters!')
+        return 'Invalid Parameters For DEF. Type HELP DEF for more Information.'
+
+    temp_a = temp_list[0].split('\\')
+
+    if len(temp_a) > 1:
+        temp_address = 'root\\' + user.username
+
+        for i in temp_a[:-1]:
+            temp_address += '\\' + i
+
+    else:
+        temp_address = user.real_current_dir
+
+    if Path(temp_address + '\\' + temp_a[-1]).is_file():
+        os.remove(temp_address + '\\' + temp_a[-1])
+        add_record(user.username, 'DEF', temp_address + '\\' + temp_a[-1],
+                   'Success. File Removed!')
+        return 'File Removed Successfully!'
+    else:
+        add_record(user.username, 'DEF', temp_address + '\\' + temp_a[-1],
+                   'Failed. File Not Found!')
+        return 'File Not Found!'
 
 
 def cpf_command(user, temp_list=None):
-    pass
+    if not temp_list or len(temp_list) != 2:
+        temp_f = ''
+        for i in temp_list:
+            temp_f += i + ', '
+
+        add_record(user.username, 'CPF', temp_f,
+                   'Failed. Invalid Parameters!')
+        return 'Invalid Parameters For CPF. Type HELP CPF for more Information.'
+
+    temp_a = temp_list[0].split('\\')
+    temp_b = temp_list[1].split('\\')
+
+    if len(temp_a) > 1 and len(temp_b) > 1:
+        src = 'root\\' + user.username
+        des = src
+
+        for i in temp_a:
+            src += '\\' + i
+        for i in temp_b:
+            des += '\\' + i
+
+    if not Path(src).is_file():
+        add_record(user.username, 'CPF', src + ' --> ' + des,
+                   'Failed. File Not Found!')
+        return 'File Not Found!'
+
+    if Path(des).is_file():
+        add_record(user.username, 'CPF', src + ' --> ' + des,
+                   'Failed. File Already Exists!')
+        return 'File Already Exists!'
+
+    temp_c = shutil.copyfile(src, des)
+
+    add_record(user.username, 'CPF', src + ' --> ' + des,
+               'Success. File Copied!')
+    return 'File Copied Successfully!'
 
 
 def mvf_command(user, temp_list=None):
-    pass
+    if not temp_list or len(temp_list) != 2:
+        temp_f = ''
+        for i in temp_list:
+            temp_f += i + ', '
+
+        add_record(user.username, 'MVF', temp_f,
+                   'Failed. Invalid Parameters!')
+        return 'Invalid Parameters For MVF. Type HELP MVF for more Information.'
+
+    temp_a = temp_list[0].split('\\')
+    temp_b = temp_list[1].split('\\')
+
+    if len(temp_a) > 1 and len(temp_b) > 1:
+        src = 'root\\' + user.username
+        des = src
+
+        for i in temp_a:
+            src += '\\' + i
+        for i in temp_b:
+            des += '\\' + i
+
+    if not Path(src).is_file():
+        add_record(user.username, 'MVF', src + ' --> ' + des,
+                   'Failed. File Not Found!')
+        return 'File Not Found!'
+
+    if Path(des).is_file():
+        add_record(user.username, 'MVF', src + ' --> ' + des,
+                   'Failed. File Already Exists!')
+        return 'File Already Exists!'
+
+    temp_c = shutil.move(src, des)
+
+    add_record(user.username, 'MVF', src + ' --> ' + des,
+               'Success. File Moved!')
+    return 'File Moved Successfully!'
 
 
 def stf_command(user, temp_list=None):
