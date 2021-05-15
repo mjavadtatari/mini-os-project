@@ -18,6 +18,3 @@ while True:
             quit = cm.read_input_command()
             if quit:
                 break
-
-
-# add_record('javad', 'add', '3, 4', '7')

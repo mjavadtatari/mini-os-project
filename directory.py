@@ -32,7 +32,7 @@ def home_command(user, temp_list=None):
     return 'Directory Changed!'
 
 
-def subd_command(user, temp_list=None):
+def show_command(user, temp_list=None):
     temp_address = user.real_current_dir
 
     if not temp_list:
@@ -44,7 +44,7 @@ def subd_command(user, temp_list=None):
         else:
             temp_out = 'Directory is Empty!'
 
-        add_record(user.username, 'SUBD', '',
+        add_record(user.username, 'SHOW', 'show',
                    'Success. Sub-Directories and Files Showed-Up!')
         return temp_out
 
@@ -103,7 +103,6 @@ def mkd_command(user, temp_list=None):
         if len(temp_a) > 1:
             if temp_a[0] == user.username:
                 temp_address = 'root\\' + temp_list[0]
-                print(temp_address)
 
                 if not os.path.exists(temp_address):
                     os.makedirs(temp_address)
@@ -260,3 +259,35 @@ def mvd_command(user, temp_list=None):
     add_record(user.username, 'MVD', src + ' --> ' + des,
                'Success. Directory Moved!')
     return 'Directory Moved Successfully!'
+
+
+def ren_command(user, temp_list=None):
+    if not temp_list or len(temp_list) < 2 or len(temp_list) > 3:
+        temp_f = ''
+        for i in temp_list:
+            temp_f += i + ', '
+
+        add_record(user.username, 'REN', temp_f,
+                   'Failed. Invalid Parameters!')
+        return 'Invalid Parameters For REN. Type HELP REN for more Information.'
+
+    if len(temp_list) == 2:
+        src = 'root\\' + temp_list[0]
+        des = 'root\\' + temp_list[1]
+
+
+    if len(temp_list) == 3:
+        address = 'root\\' + temp_list[0]
+        src = address + '\\' + temp_list[1]
+        des = address + '\\' + temp_list[2]
+
+    try:
+        os.rename(src, des)
+    except FileNotFoundError:
+        add_record(user.username, 'REN', src + ' --> ' + des,
+                   'Failed. File Not Found!')
+        return 'File Not Found!'
+
+    add_record(user.username, 'REN', src + ' --> ' + des,
+               'Renamed Successfully!')
+    return 'Renamed Successfully!'

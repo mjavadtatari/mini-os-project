@@ -6,20 +6,19 @@ File Commands:
   DEF +t Delete a File.
   CPF +t Copy a File.
   MVF +t Move a File.
-  RNF +t Rename a File.
+  REN +t Rename a File.
   STF +t Sort a Text File.
   SEF +t Sort a Excel File.
 
 Directory Commands:
   HOME +t Show User Root Directory.
-  SUBD +t Show All Sub Directories.
+  SHOW +t Show All Sub Directories.
   CHD +t Change Directory.
   MKD +t Make New Directory.
   DED +t Delete a Directory.
   CPD +t Copy a Directory.
   MVD +t Move a Directory.
-  RND +t Rename a Directory.
-  EXD +t Export Directories List as an Excel File.
+  REN +t Rename a Directory.
 
 Calculator Commands:
   ADD +t Addition Multiple Numbers.
@@ -50,3 +49,5 @@ dont include
   *DED +t For Use This Command Type (DED directory_name) OR (DED full\address) +n+t  Use (-RF) For Delete None Empty Directories.
   *CPD +t For Use This Command Type (CPD source_directory destination_directory)
   *MVD +t For Use This Command Type (MVD source_directory destination_directory)
+  *SHOW +t For Use This Command Type (SHOW)
+  *REN +t For Use This Command Type (REN source destination) OR (REN address perv_name next_name)

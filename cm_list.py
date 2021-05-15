@@ -1,5 +1,6 @@
 from calculator import *
 from directory import *
+from file import *
 
 
 def help_command(user, temp_x):
@@ -48,21 +49,19 @@ all_cm = {
     'gcd': {'func': gcd_command, },
     'base': {'func': base_command, },
     'home': {'func': home_command, },
-    'subd': {'func': subd_command, },
+    'show': {'func': show_command, },
     'chd': {'func': chd_command, },
     'mkd': {'func': mkd_command, },
     'ded': {'func': ded_command, },
     'cpd': {'func': cpd_command, },
     'mvd': {'func': mvd_command, },
-    'rnd': {'func': '', },
-    'exd': {'func': '', },
-    'mkf': {'func': '', },
-    'opf': {'func': '', },
-    'def': {'func': '', },
-    'cpf': {'func': '', },
-    'mvf': {'func': '', },
-    'rnf': {'func': '', },
-    'stf': {'func': '', },
-    'sef': {'func': '', },
+    'ren': {'func': ren_command, },
+    'mkf': {'func': mkf_command, },
+    'opf': {'func': opf_command, },
+    'def': {'func': def_command, },
+    'cpf': {'func': cpf_command, },
+    'mvf': {'func': mvf_command, },
+    'stf': {'func': stf_command, },
+    'sef': {'func': sef_command, },
     '': {'func': '', },
 }
