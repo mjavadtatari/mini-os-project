@@ -3,6 +3,7 @@ import openpyxl
 from management import *
 from logs_file import *
 from termcolor import colored
+from reset_password import forget_password
 
 
 users_db = openpyxl.load_workbook('Users.xlsx')
@@ -56,8 +57,14 @@ class Account():
         else:
             return False
 
-    def check_is_user_banned(self):
-        if users_db_ws['H' + self.user_row].value == 'T':
+    def check_is_user_banned(self, temp_username=None):
+        if temp_username:
+            for row in users_db_ws.iter_rows(users_db_ws.min_row, users_db_ws.max_row + 1):
+                for cell in row:
+                    if str(cell.value) == temp_username:
+                        temp_user_row = str(cell.row)
+
+        if users_db_ws['H' + temp_user_row].value == 'T':
             return True
         else:
             return False
@@ -66,17 +73,17 @@ class Account():
         if username == 'mjavadtatri':
             return True
 
-        if self.failed_attempted >= 2 and self.username != '':
+        if self.failed_attempted >= 3 and self.username != '':
             users_db_ws['H' + self.user_row].value = 'T'
             users_db.save('Users.xlsx')
             add_record(username, 'banned', '3 failed attempts',
-                       'Banned Successfully')
+                       'User Banned Successfully!')
             print(
                 colored('due to 3 failed attempts, your account has been banned!', 'red'))
             sleep(3)
             quit()
 
-        elif self.failed_attempted < 2:
+        elif self.failed_attempted < 3:
             self.failed_attempted += 1
             add_record(username, 'login', 'pass: ' + password,
                        'Failed Attempts= ' + str(self.failed_attempted), 'r')
@@ -166,12 +173,31 @@ class Account():
 
     def loginPage(self):
         while True:
+            if self.failed_attempted >= 3 and self.username != '':
+                users_db_ws['H' + self.user_row].value = 'T'
+                users_db.save('Users.xlsx')
+                add_record(self.username, 'banned', '3 failed attempts',
+                           'User Banned Successfully!')
+                print(
+                    colored('due to 3 failed attempts, your account has been banned!', 'red'))
+                sleep(3)
+                quit()
+
             temp_username = input('Login as: ')
+
+            if self.check_is_user_banned(temp_username):
+                add_record(temp_username, 'kicked', 'User is Banned',
+                           'Success, Session has Ended')
+                print(
+                    colored('Your Account Has Been Banned!', 'red'))
+                sleep(3)
+                quit()
+
             temp_password = input(
                 temp_username + '\'s Password (\'F\' for forgot Password): ')
 
             if temp_password.lower() == 'f':
-                self.forget_password(temp_username)
+                forget_password(temp_username)
                 break
 
             if self.check_password(temp_username, temp_password):
@@ -188,6 +214,3 @@ class Account():
     def update_account_info(self):
         temp_first = input(self.username_title() + 'First Name : ')
         temp_last = input(self.username_title() + 'Last Name : ')
-
-    def forget_password(self, username):
-        pass
