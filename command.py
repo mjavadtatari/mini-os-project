@@ -26,15 +26,15 @@ class Command():
                 print('\n\n\n')
                 return temp_cm[0]
 
-            try:
-                print(all_cm[temp_cm[0].lower()]['func']
-                      (self, temp_cm[1:]))
-            except KeyError:
-                print(colored('Enter a Valid Command Key!\n', 'yellow'))
-                add_record(self.username, 'Not Valid', temp_cm[0],
-                           'Fail')
-
-            except TypeError:
-                print(colored('Enter a Valid Command Key!\n', 'yellow'))
-                add_record(self.username, 'Not Valid', temp_cm[0],
-                           'Fail')
+            # try:
+            print(all_cm[temp_cm[0].lower()]['func']
+                  (self, temp_cm[1:]))
+            # except KeyError:
+            #     print(colored('Enter a Valid Command Key!\n', 'yellow'))
+            #     add_record(self.username, 'Not Valid', temp_cm[0],
+            #                'Fail')
+            #
+            # except TypeError:
+            #     print(colored('Enter a Valid Command Key!\n', 'yellow'))
+            #     add_record(self.username, 'Not Valid', temp_cm[0],
+            #                'Fail')

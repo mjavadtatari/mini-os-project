@@ -64,10 +64,10 @@ class Account():
                     if str(cell.value) == temp_username:
                         temp_user_row = str(cell.row)
 
-        if users_db_ws['H' + temp_user_row].value == 'T':
-            return True
-        else:
-            return False
+            if users_db_ws['H' + temp_user_row].value == 'T':
+                return True
+            else:
+                return False
 
     def ban_user(self, username, password):
         if username == 'mjavadtatri':

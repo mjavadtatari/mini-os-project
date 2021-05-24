@@ -227,8 +227,76 @@ def mvf_command(user, temp_list=None):
 
 
 def stf_command(user, temp_list=None):
-    pass
+    dest_file_name = None
 
+    if not temp_list or len(temp_list) > 2:
+        temp_f = ''
+        for i in temp_list:
+            temp_f += i + ', '
 
-def sef_command(user, temp_list=None):
-    pass
+        add_record(user.username, 'STF', temp_f,
+                   'Failed. Invalid Parameters!')
+        return 'Invalid Parameters For STF. Type HELP STF for more Information.'
+
+    if len(temp_list) > 1:
+        temp_b = temp_list[1].split('\\')
+
+        if len(temp_b) > 1:
+            dest_file_name = 'root\\' + user.username
+
+            for i in temp_b:
+                dest_file_name += '\\' + i
+
+        else:
+            dest_file_name = temp_list[1]
+
+    temp_a = temp_list[0].split('\\')
+
+    if len(temp_a) > 1:
+        temp_address = 'root\\' + user.username
+
+        for i in temp_a[:-1]:
+            temp_address += '\\' + i
+
+    else:
+        temp_address = user.real_current_dir
+
+    if not Path(temp_address + '\\' + temp_a[-1]).is_file():
+        add_record(user.username, 'STF', temp_address + '\\' + temp_a[-1],
+                   'Failed. File Dose NOT Exists!')
+        return 'File Dose NOT Exists!'
+
+    if temp_a[-1][-3:].lower() != 'txt':
+        add_record(user.username, 'STF', temp_address + '\\' + temp_a[-1],
+                   'Failed. File Format NOT Supported!')
+        return 'File Format NOT Supported! Only .txt'
+
+    temp_file = open(os.path.join(temp_address, temp_a[-1]), 'r+')
+    temp_lines = temp_file.readlines()
+    temp_file.close()
+
+    temp_lines.sort()
+
+    if not dest_file_name:
+        for i in range(len(temp_lines)):
+            if temp_lines[i][-1:] != '\n':
+                temp_lines[i] = temp_lines[i] + '\n'
+
+            print(temp_lines[i], end='')
+    else:
+        for i in range(len(temp_lines)):
+            if temp_lines[i][-1:] != '\n':
+                temp_lines[i] = temp_lines[i] + '\n'
+
+        if Path(dest_file_name).is_file():
+            add_record(user.username, 'STF', dest_file_name,
+                       'Failed. File Already Exists!')
+            return 'File Already Exists!'
+
+        temp_file = open(dest_file_name, 'w')
+        temp_file.writelines(temp_lines)
+        temp_file.close()
+
+        add_record(user.username, 'STF', dest_file_name,
+                   'Success. Sorted and File Created!')
+        return 'Sorted and File Created Successfully!'

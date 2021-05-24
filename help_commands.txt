@@ -8,7 +8,6 @@ File Commands:
   MVF +t Move a File.
   REN +t Rename a File.
   STF +t Sort a Text File.
-  SEF +t Sort a Excel File.
 
 Directory Commands:
   HOME +t Show User Root Directory.
@@ -51,3 +50,9 @@ dont include
   *MVD +t For Use This Command Type (MVD source_directory destination_directory)
   *SHOW +t For Use This Command Type (SHOW)
   *REN +t For Use This Command Type (REN source destination) OR (REN address perv_name next_name)
+  *MKF +t For Use This Command Type (MKF file_name.file_format) OR (MKF file_address)
+  *OPF +t For Use This Command Type (OPF file_destination) Only for TXT files!
+  *DEF +t For Use This Command Type (DEF file_name.file_format) OR (DEF file_address)
+  *CPF +t For Use This Command Type (CPF source_file destination_file)
+  *MVF +t For Use This Command Type (MVF source_file destination_file)
+  *STF +t For Use This Command Type (STF source_file destination_file) OR (STF file_address)

@@ -62,6 +62,5 @@ all_cm = {
     'cpf': {'func': cpf_command, },
     'mvf': {'func': mvf_command, },
     'stf': {'func': stf_command, },
-    'sef': {'func': sef_command, },
     '': {'func': '', },
 }
