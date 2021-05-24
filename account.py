@@ -2,7 +2,7 @@ import sys
 import openpyxl
 from management import *
 from logs_file import *
-from termcolor import colored
+# from termcolor import colored
 from reset_password import forget_password
 
 
@@ -50,8 +50,7 @@ class Account():
             else:
                 add_record(self.username, 'login', 'pass: ' +
                            self.password, 'Failed, The User is Banned', 'r')
-                print(colored(
-                    'Your account has been banned, please contact the administrator!', 'red'))
+                print('Your account has been banned, please contact the administrator!')
                 sleep(3)
                 quit()
         else:
@@ -78,8 +77,7 @@ class Account():
             users_db.save('Users.xlsx')
             add_record(username, 'banned', '3 failed attempts',
                        'User Banned Successfully!')
-            print(
-                colored('due to 3 failed attempts, your account has been banned!', 'red'))
+            print('due to 3 failed attempts, your account has been banned!')
             sleep(3)
             quit()
 
@@ -87,14 +85,13 @@ class Account():
             self.failed_attempted += 1
             add_record(username, 'login', 'pass: ' + password,
                        'Failed Attempts= ' + str(self.failed_attempted), 'r')
-            print(colored('your failed attempts= ' +
-                  str(self.failed_attempted) + '\n\n\n', 'yellow'))
+            print('your failed attempts= ' +
+                  str(self.failed_attempted) + '\n\n\n')
 
         else:
             add_record(username, 'kicked', '3 failed attempts',
                        'Session has Ended', 'r')
-            print(
-                colored('due to 3 failed attempts, your session has ended!', 'red'))
+            print('due to 3 failed attempts, your session has ended!')
             sleep(3)
             quit()
 
@@ -108,7 +105,7 @@ class Account():
         regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 
         if str(users_db_ws['D' + self.user_row].value) == 'None':
-            print(colored('\n\nYou Need to Submit Your Email Address!\n', 'blue'))
+            print('\n\nYou Need to Submit Your Email Address!\n')
             while True:
                 temp_email = input(self.username_title() + 'Email : ')
                 if re.search(regex, temp_email):
@@ -116,12 +113,12 @@ class Account():
                     users_db.save('Users.xlsx')
                     add_record(self.username, 'set email', 'email :' + temp_email,
                                'Submited Successfully')
-                    print(colored('\nEmail Submited Successfully!\n\n', 'green'))
+                    print('\nEmail Submited Successfully!\n\n')
                     break
                 else:
                     add_record(self.username, 'set email', 'email :' + temp_email,
                                'Failed, Not a Valid address', 'r')
-                    print(colored('Enter a Valid Email address!\n', 'yellow'))
+                    print('Enter a Valid Email address!\n')
 
     def password_strength_checker(self, password):
         import re
@@ -146,8 +143,8 @@ class Account():
     def change_password(self):
         self.set_email()
         if users_db_ws['G' + self.user_row].value == 'T':
-            print(colored('\nYou Need to Change Your Password!', 'blue'))
-            print(colored('The password must be at least 8 characters long and contain both lower and upper case letters, numbers, and symbols.\n\n', 'white'))
+            print('\nYou Need to Change Your Password!')
+            print('The password must be at least 8 characters long and contain both lower and upper case letters, numbers, and symbols.\n\n')
             while True:
                 temp_password = input(
                     self.username_title() + 'New Password : ')
@@ -160,12 +157,10 @@ class Account():
                     self.relogin = True
                     add_record(self.username, 'change password', 'pass :' + temp_password,
                                'Changed Successfully')
-                    print(
-                        colored('\nThe new password is Great!, Login again!!\n\n\n', 'green'))
+                    print('\nThe new password is Great!, Login again!!\n\n\n')
                     break
                 else:
-                    print(
-                        colored('The entered Password is not Strong enough, Try again!\n', 'yellow'))
+                    print('The entered Password is not Strong enough, Try again!\n')
                     add_record(self.username, 'change password', 'pass :' + temp_password,
                                'Failed, easily crackable password', 'r')
         else:
@@ -178,8 +173,7 @@ class Account():
                 users_db.save('Users.xlsx')
                 add_record(self.username, 'banned', '3 failed attempts',
                            'User Banned Successfully!')
-                print(
-                    colored('due to 3 failed attempts, your account has been banned!', 'red'))
+                print('due to 3 failed attempts, your account has been banned!')
                 sleep(3)
                 quit()
 
@@ -188,8 +182,7 @@ class Account():
             if self.check_is_user_banned(temp_username):
                 add_record(temp_username, 'kicked', 'User is Banned',
                            'Success, Session has Ended')
-                print(
-                    colored('Your Account Has Been Banned!', 'red'))
+                print('Your Account Has Been Banned!')
                 sleep(3)
                 quit()
 
@@ -201,11 +194,11 @@ class Account():
                 break
 
             if self.check_password(temp_username, temp_password):
-                print(colored('\nWelcome ' + temp_username, 'green'))
+                print('\nWelcome ' + temp_username)
                 self.change_password()
                 break
             else:
-                print(colored('\nThe Username or Password is Incorrect!', 'red'))
+                print('\nThe Username or Password is Incorrect!')
                 self.ban_user(temp_username, temp_password)
 
     def username_title(self):
